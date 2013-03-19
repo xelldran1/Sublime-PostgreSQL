@@ -6,26 +6,26 @@ from subprocess import PIPE, Popen, STDOUT
 from sublime import error_message, message_dialog, packages_path, run_command
 try:
     import sublime_helper
-    selection =sublime_helper.selection
-    substr =sublime_helper.substr
-    PanelCommand =sublime_helper.command.PanelCommand
-    SafeCommand =sublime_helper.command.SafeCommand
-    pkg =sublime_helper.package(__file__)
-    settings =pkg.settings
+    selection = sublime_helper.selection
+    substr = sublime_helper.substr
+    PanelCommand = sublime_helper.command.PanelCommand
+    SafeCommand = sublime_helper.command.SafeCommand
+    pkg = sublime_helper.package(__file__)
+    settings = pkg.settings
 except Exception, e:
-    path =relpath(__file__,packages_path())
-    line =exc_info()[2].tb_lineno
+    path = relpath(__file__, packages_path())
+    line = exc_info()[2].tb_lineno
     error_message("""python%s\n%s
 line %s:\n
 %s:\n%s""" % (
-    python_version(), path,line,
-    type(e), str(e)
-    ))
+                  python_version(), path, line,
+                  type(e), str(e)
+                  ))
 
 
 def open_doc():
-    url ="www.postgresql.org/docs/9.2/static/libpq-pgpass.html"
-    run_command("open_url", {"url":url})
+    url = "www.postgresql.org/docs/9.2/static/libpq-pgpass.html"
+    run_command("open_url", {"url": url})
 
 
 if not pkg.user.settings.exists:
@@ -37,7 +37,7 @@ if not pkg.user.settings.exists:
 
 class PostgresqlBuildCommand(PanelCommand):
     def saferun(self):
-        f =self.window.active_view().file_name()
+        f = self.window.active_view().file_name()
         self.clear()
         process = Popen(
             [
@@ -57,7 +57,7 @@ class PostgresqlBuildCommand(PanelCommand):
             stderr=STDOUT
         )
         self.show()
-        stdout,stderr =process.communicate()
+        stdout, stderr = process.communicate()
         if stdout:
             self.insert(stdout)
         if stderr:

@@ -6,23 +6,23 @@ from sublime import load_settings, error_message, message_dialog, packages_path,
 try:
     import sublime_helper
     import file
-    open_file =sublime_helper.open_file
-    SafeCommand =sublime_helper.SafeCommand
-    pkg =sublime_helper.package(__file__)
-    settings =pkg.settings
+    open_file = sublime_helper.open_file
+    SafeCommand = sublime_helper.SafeCommand
+    pkg = sublime_helper.package(__file__)
+    settings = pkg.settings
 except Exception, e:
     package = relpath(__file__, packages_path())
     line = exc_info()[2].tb_lineno
     error_message("""python%s\n%s
 line %s:\n
 %s:\n%s""" % (
-    python_version(), package, line,
-    type(e), str(e)
-    ))
+                  python_version(), package, line,
+                  type(e), str(e)
+                  ))
 
 
 def pgpass_tip():
-    url ="www.postgresql.org/docs/9.2/static/libpq-pgpass.html"
+    url = "www.postgresql.org/docs/9.2/static/libpq-pgpass.html"
     status_message(url)
     message_dialog("psql get password from pgpass")
     status_message(url)
@@ -34,8 +34,8 @@ if not file.exists(settings.user.file):
     pgpass_tip()
 
 
-name ="PostgreSQL.sublime-settings"
-s =load_settings(name)
+name = "PostgreSQL.sublime-settings"
+s = load_settings(name)
 error_message(s.get("database"))
 
 
